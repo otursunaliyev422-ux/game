@@ -1,0 +1,401 @@
+/* =========================================================
+   ILONCHA 3D (SNAKE) O'YINI — CSS
+   ========================================================= */
+
+/* ==================== UMUMIY ==================== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-1: #0b1120;
+  --bg-2: #060a14;
+  --panel: rgba(17, 28, 51, 0.85);
+  --panel-2: rgba(22, 36, 63, 0.9);
+  --border: rgba(148, 163, 184, 0.16);
+  --accent: #4ade80;
+  --accent-dark: #16a34a;
+  --danger: #ef4444;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 16px;
+  font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at 15% 0%, #1e293b 0%, var(--bg-1) 45%, var(--bg-2) 100%);
+  background-attachment: fixed;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ==================== KONTEYNER ==================== */
+.game-wrapper {
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ==================== SARLAVHA ==================== */
+.game-header {
+  text-align: center;
+}
+
+.game-header h1 {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #86efac 0%, #4ade80 45%, #22c55e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 18px rgba(74, 222, 128, 0.28));
+}
+
+.subtitle {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+}
+
+/* ==================== STATISTIKA ==================== */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 8px;
+  border-radius: 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+}
+
+.stat-card.highlight {
+  border-color: rgba(74, 222, 128, 0.45);
+  box-shadow: 0 6px 22px rgba(74, 222, 128, 0.18);
+}
+
+.stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+.stat-card.highlight .stat-value {
+  color: #facc15;
+  text-shadow: 0 0 16px rgba(250, 204, 21, 0.35);
+}
+
+/* ==================== 3D O'YIN MAYDONI ==================== */
+.canvas-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #0b1120;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55),
+              inset 0 0 60px rgba(74, 222, 128, 0.04);
+}
+
+#gameCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #0b1120;
+  touch-action: none;
+}
+
+/* ==================== OVERLAY ==================== */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  background: rgba(6, 10, 20, 0.82);
+  backdrop-filter: blur(6px);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  z-index: 5;
+}
+
+.overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.overlay-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: 300px;
+}
+
+.overlay-content h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.25;
+}
+
+.overlay-content p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* ==================== TUGMALAR ==================== */
+.btn {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  padding: 13px 30px;
+  border-radius: 12px;
+  color: #052e16;
+  background: linear-gradient(180deg, #6ee7a0 0%, #22c55e 100%);
+  box-shadow: 0 8px 22px rgba(34, 197, 94, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.07);
+  box-shadow: 0 12px 26px rgba(34, 197, 94, 0.45);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.btn-secondary {
+  flex: 1;
+  color: var(--text);
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.btn-secondary:hover {
+  filter: brightness(1.25);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.4);
+}
+
+.btn-danger {
+  color: #fee2e2;
+  background: rgba(239, 68, 68, 0.16);
+  border: 1px solid rgba(239, 68, 68, 0.45);
+  box-shadow: none;
+}
+
+.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.28);
+  filter: none;
+}
+
+.btn-small {
+  padding: 8px 16px;
+  font-size: 12px;
+  border-radius: 9px;
+}
+
+/* ==================== BOSHQARUV QATORI ==================== */
+.controls {
+  display: flex;
+  gap: 10px;
+}
+
+/* ==================== MOBIL D-PAD ==================== */
+.mobile-controls {
+  display: none;
+  grid-template-columns: repeat(3, 62px);
+  grid-template-rows: repeat(2, 62px);
+  grid-template-areas:
+    ".    up    ."
+    "left down right";
+  gap: 8px;
+  justify-content: center;
+  margin-top: -4px;
+}
+
+.mobile-controls .up    { grid-area: up; }
+.mobile-controls .left  { grid-area: left; }
+.mobile-controls .down  { grid-area: down; }
+.mobile-controls .right { grid-area: right; }
+
+.dpad {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--panel-2);
+  color: var(--accent);
+  font-size: 20px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.12s ease, transform 0.1s ease;
+}
+
+.dpad:active {
+  background: rgba(74, 222, 128, 0.22);
+  transform: scale(0.94);
+}
+
+/* ==================== REKORDLAR ==================== */
+.records {
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
+}
+
+.records-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.records-header h2 {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: #cbd5e1;
+}
+
+.records-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.records-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 11px;
+  background: rgba(148, 163, 184, 0.06);
+  border: 1px solid transparent;
+  font-size: 14px;
+  animation: fadeIn 0.3s ease;
+}
+
+.records-list li:first-child:not(.empty) {
+  background: rgba(250, 204, 21, 0.09);
+  border-color: rgba(250, 204, 21, 0.3);
+}
+
+.records-list li.empty {
+  justify-content: center;
+  color: var(--muted);
+  font-size: 13px;
+  font-style: italic;
+  background: transparent;
+}
+
+.records-list .rank {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 800;
+  color: #052e16;
+  background: var(--accent);
+}
+
+.records-list li:nth-child(1) .rank { background: #facc15; }
+.records-list li:nth-child(2) .rank { background: #cbd5e1; }
+.records-list li:nth-child(3) .rank { background: #d97706; }
+
+.records-list .rec-score {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #f1f5f9;
+}
+
+.records-list .rec-date {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ==================== FOOTER ==================== */
+.footer {
+  text-align: center;
+  font-size: 11.5px;
+  color: #64748b;
+  letter-spacing: 0.3px;
+}
+
+/* ==================== MOSLASHUVCHANLIK ==================== */
+@media (hover: none) and (pointer: coarse) {
+  .mobile-controls { display: grid; }
+}
+
+@media (max-width: 420px) {
+  .game-header h1 { font-size: 26px; }
+  .stat-value { font-size: 19px; }
+  .btn { font-size: 14px; padding: 11px 22px; }
+  .mobile-controls {
+    grid-template-columns: repeat(3, 56px);
+    grid-template-rows: repeat(2, 56px);
+  }
+}
+
+@media (max-height: 720px) and (orientation: landscape) {
+  .game-wrapper { max-width: 380px; }
+  .footer { display: none; }
+}

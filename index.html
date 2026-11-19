@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0b1120" />
+  <title>🐍 Iloncha 3D — Snake o'yini</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="game-wrapper">
+
+    <!-- ===== SARLAVHA ===== -->
+    <header class="game-header">
+      <h1>🐍 Iloncha 3D</h1>
+      <p class="subtitle">Strelkalar yoki W A S D bilan boshqaring</p>
+    </header>
+
+    <!-- ===== STATISTIKA ===== -->
+    <div class="stats">
+      <div class="stat-card">
+        <span class="stat-label">Hisob</span>
+        <span class="stat-value" id="score">0</span>
+      </div>
+      <div class="stat-card highlight">
+        <span class="stat-label">Rekord</span>
+        <span class="stat-value" id="highScore">0</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Daraja</span>
+        <span class="stat-value" id="level">1</span>
+      </div>
+    </div>
+
+    <!-- ===== 3D O'YIN MAYDONI ===== -->
+    <div class="canvas-container">
+      <canvas id="gameCanvas"></canvas>
+
+      <div class="overlay" id="overlay">
+        <div class="overlay-content">
+          <h2 id="overlayTitle">Iloncha 3D</h2>
+          <p id="overlayText">Boshlash uchun tugmani bosing</p>
+          <button class="btn" id="startBtn">Boshlash</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== BOSHQARUV TUGMALARI ===== -->
+    <div class="controls">
+      <button class="btn btn-secondary" id="pauseBtn">⏸ Pauza</button>
+      <button class="btn btn-secondary" id="restartBtn">🔄 Qaytadan</button>
+    </div>
+
+    <!-- ===== MOBIL D-PAD ===== -->
+    <div class="mobile-controls">
+      <button class="dpad up"    data-dir="up"    aria-label="Yuqoriga">▲</button>
+      <button class="dpad left"  data-dir="left"  aria-label="Chapga">◀</button>
+      <button class="dpad down"  data-dir="down"  aria-label="Pastga">▼</button>
+      <button class="dpad right" data-dir="right" aria-label="O'ngga">▶</button>
+    </div>
+
+    <!-- ===== REKORDLAR ===== -->
+    <section class="records">
+      <div class="records-header">
+        <h2>🏆 Eng yaxshi natijalar</h2>
+        <button class="btn btn-danger btn-small" id="clearRecordsBtn">Tozalash</button>
+      </div>
+      <ol class="records-list" id="recordsList">
+        <li class="empty">Hozircha natijalar yo'q</li>
+      </ol>
+    </section>
+
+    <footer class="footer">
+      <p>Space — pauza · Enter — boshlash / qaytadan</p>
+    </footer>
+
+  </div>
+
+  <!-- Three.js (r150 — UMD, oddiy script tegi orqali ishlaydi) -->
+  <script src="https://unpkg.com/three@0.150.1/build/three.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
